@@ -73,4 +73,44 @@ export class BlogController {
             })
         }
     }
+
+    // async getDashboard(req: Request, res: Response) {
+    //     try {
+    //       // Dashboard logic here
+    //       res.status(200).send({ status: 'ok', msg: 'Welcome to the dashboard!' });
+    //     } catch (err) {
+    //       res.status(400).send({ status: 'error', msg: err });
+    //     }
+    //   }
+
+    async getDashboard(req: Request, res: Response) {
+        try {
+          const authorId = req.author?.id!; // assuming req.author is available
+          const blogs = await prisma.blog.findMany({
+            where: { authorId },
+            include: { author: true },
+            orderBy: { createdAt: 'desc' }
+          });
+      
+          const dashboardData = {
+            message: 'Welcome to the dashboard!',
+            postCount: blogs.length,
+            blogs: blogs.map((blog) => ({
+              id: blog.id,
+              title: blog.title,
+              slug: blog.slug,
+              category: blog.category,
+              content: blog.content,
+              createdAt: blog.createdAt,
+              updatedAt: blog.updatedAt
+            }))
+          };
+      
+          res.status(200).send({ status: 'ok', data: dashboardData });
+        } catch (err) {
+          res.status(400).send({ status: 'error', msg: err });
+        }
+      }
+
+
 }

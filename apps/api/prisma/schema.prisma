@@ -16,6 +16,7 @@ datasource db {
 enum Role {
   Author
   Admin
+  User
 }
 
 enum Category {
@@ -30,12 +31,24 @@ model Author {
   name      String
   email     String   @unique
   password  String
-  role      Role     @default(Author)
+  role      Role     
   isVerify  Boolean  @default(false)
   avatar    String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Blog      Blog[]
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(User)
+  isVerify  Boolean  @default(false)
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Blog {

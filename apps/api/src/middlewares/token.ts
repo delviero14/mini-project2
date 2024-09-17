@@ -27,7 +27,7 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
 
 export const checkAdmin = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        if (req.author?.role !== "Admin") throw "Unauthorize"
+        if (req.author?.role !== "Author") throw "Unauthorize, only Admin can Access this page"
 
         next()
     } catch (err) {
