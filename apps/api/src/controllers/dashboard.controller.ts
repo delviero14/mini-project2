@@ -46,6 +46,7 @@ class DashboardController {
         select: {
           id: true,
           title: true,
+          category: true,
           author: {
             select: {
               name: true,
@@ -65,7 +66,7 @@ class DashboardController {
       res.json(data);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'An unexpected error occurred' });
+      res.status(400).json({ error: 'An unexpected error occurred' });
     }
   }
 }

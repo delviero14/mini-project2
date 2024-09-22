@@ -16,6 +16,7 @@ export class DashboardRouter {
     private initializeRoutes(): void {
         this.router.get('/', verifyToken, checkAdmin, (req: Request, res: Response) => {
             this.dashboardController.getDashboard(req, res)
+        // this.router.get('/', this.dashboardController.getDashboard)
         })
     }
 
