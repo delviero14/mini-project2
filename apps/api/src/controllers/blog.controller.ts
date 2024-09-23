@@ -3,16 +3,16 @@ import prisma from "../prisma";
 import { Prisma } from "@prisma/client";
 
 export class BlogController {
-    async createBlog(req: Request, res: Response){
+    async createBlog(req: any, res: Response){
         try {
             if (!req.file) throw "no file uploaded"
             const link = `http://localhost:8000/api/public/blog/${req?.file?.filename}`
 
-            const { title, category, content, slug } = req.body
+            const { title, category, content, slug, location, price } = req.body
 
             const blog = await prisma.blog.create({
                 data: {
-                    title, category, content, slug,
+                    title, category, content, price, slug , location,
                     image: link,
                     authorId: req.author?.id!
                 }
@@ -30,7 +30,7 @@ export class BlogController {
         }
     }
 
-    async getBlogs(req: Request, res: Response) {
+    async getBlogs(req: any, res: Response) {
         try {
             const { search } = req.query
             let filter: Prisma.BlogWhereInput = {}
@@ -55,7 +55,7 @@ export class BlogController {
         }
     }
 
-    async getBlogSlug(req: Request, res: Response) {
+    async getBlogSlug(req: any, res: Response) {
         try {
             const blogs = await prisma.blog.findFirst({
                 where: { slug: req.params.slug },

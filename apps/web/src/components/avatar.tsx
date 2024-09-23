@@ -43,6 +43,8 @@ export default function AvatarComp() {
                 <div className="flex gap-4 dark:text-white">
                     <Link href={'/register'}>Register</Link>
                     <Link href={'/login'}>Login</Link>
+                    <Link href={'/'}>Event </Link>
+                    <Link href={'/'}>Transaction </Link>
                 </div> 
         }
         </div>

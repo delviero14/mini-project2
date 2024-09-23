@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = "mysql://root:123456@localhost:3306/mini_project"
 }
 
 enum Role {
@@ -23,6 +23,24 @@ enum Category {
   Sport
   Tech
   Science
+}
+
+enum TicketType {
+  Free
+  Paid
+}
+
+enum TransactionStatus {
+  Created 
+  Paid
+  Cancelled
+}
+
+enum Review {
+  VeryBad 
+  Normal
+  Good
+  VeryGood 
 }
 
 model Author {
@@ -48,6 +66,53 @@ model Blog {
   authorId  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  location  String
+  price     Int
+  type      TicketType @default(Free)
+  eventDateTime DateTime?
+  availableSeats Int @default(0)
 
   author Author @relation(fields: [authorId], references: [id])
+  
+
 }
+
+  model Voucher {
+    id        Int      @id @default(autoincrement())
+    name      String
+    code      String
+    startDate DateTime?
+    endDate   DateTime?
+    availableFor  Int 
+    discount  Int
+  }
+
+  model Transaction {
+    id      Int @id @default(autoincrement())
+    name  String 
+    status  TransactionStatus 
+    idBlog   Int @default(0)
+    quantity  Int @default(1)
+    createdAt DateTime @default(now())  
+    amount  Int @default(0)
+    voucher Int @default(0)
+    totalPaid Int @default(0)
+  }
+
+model Post {
+    id   Int @id @default(autoincrement())
+    title String
+    content String
+    createdAt DateTime @default(now())  
+}
+
+model Reviews {
+  id Int @id @default(autoincrement())
+  name  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  review  Review
+}
+
+  
+

@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -13,6 +11,7 @@ export default function Home() {
   const [filteredBlogs, setFilteredBlogs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const blogsPerPage = 5;
+  const [locationFilter, setLocationFilter] = useState("");
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -28,16 +27,24 @@ export default function Home() {
     setCurrentPage(1);
   };
 
+  const filterByLocation = (location: string) => {
+    setLocationFilter(location);
+    setCurrentPage(1);
+  };
+
   const showAllBlogs = () => {
     setFilteredBlogs([]);
+    setLocationFilter("");
     setCurrentPage(1);
   };
 
   const indexOfLastBlog = currentPage * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
-  const currentBlogs = (filteredBlogs.length > 0 ? filteredBlogs : blogs).slice(indexOfFirstBlog, indexOfLastBlog);
+  const currentBlogs = (filteredBlogs.length > 0 ? filteredBlogs : blogs)
+    .filter((item: any) => !locationFilter || item.location === locationFilter)
+    .slice(indexOfFirstBlog, indexOfLastBlog);
 
-  const totalPages = Math.ceil((filteredBlogs.length > 0 ? filteredBlogs.length : blogs.length) / blogsPerPage);
+  const totalPages = Math.ceil((currentBlogs.length) / blogsPerPage);
 
   return (
     <Wrapper>
@@ -52,6 +59,10 @@ export default function Home() {
         <button onClick={() => filterBlogs("Sport")} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"> Sport
         </button>
         <button onClick={showAllBlogs} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"> Show All
+        </button>
+        <button onClick={() => filterByLocation("New York")} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-purple-700 rounded-lg hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"> New York
+        </button>
+        <button onClick={() => filterByLocation("Los Angeles")} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-purple-700 rounded-lg hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"> Los Angeles
         </button>
         {
           currentBlogs.map((items: any) => {

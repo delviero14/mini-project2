@@ -10,7 +10,7 @@ import handlebars from "handlebars"
 export class AuthorController {
     async createAuthor(req: Request, res: Response) {
         try{
-            const { name, email, password } = req.body
+            const { updatedAt,createdAt,role,isVerify,name, email, password } = req.body
 
             const existingAuthor = await prisma.author.findUnique({
                 where: {email: email}
@@ -22,7 +22,7 @@ export class AuthorController {
             const hashPassword = await hash(password, salt)
 
             const author = await prisma.author.create({
-                data: { name, email, password: hashPassword }
+                data: { updatedAt,createdAt,role,isVerify,name, email, password: hashPassword }
             })
 
             const payload = { id: author.id }
@@ -90,7 +90,7 @@ export class AuthorController {
         }
     }
 
-    async editAvatar(req: Request, res: Response) {
+    async editAvatar(req:any , res: Response) {
         try {
             if (!req.file) throw "no file uploaded"
             const link = `http://localhost:8000/api/public/avatar/${req?.file?.filename}`
@@ -111,7 +111,7 @@ export class AuthorController {
         }
     }
 
-    async verifyAuthor(req: Request, res: Response) {
+    async verifyAuthor(req: any, res: Response) {
         try {
             const author = await prisma.author.findUnique({
                 where: { id: req.author?.id }

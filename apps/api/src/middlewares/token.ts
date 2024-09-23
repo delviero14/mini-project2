@@ -6,7 +6,7 @@ type IAuthor = {
     role: string
 }
 
-export const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
+export const verifyToken = async (req: any, res: Response, next: NextFunction) => {
     try {
         const token = req.header("Authorization")?.replace("Bearer ", "")
         if (!token) throw "token empty!"
@@ -25,7 +25,7 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
     }
 }
 
-export const checkAdmin = async (req: Request, res: Response, next: NextFunction) => {
+export const checkAdmin = async (req: any, res: Response, next: NextFunction) => {
     try {
         if (req.author?.role !== "Admin") throw "Unauthorize"
 
