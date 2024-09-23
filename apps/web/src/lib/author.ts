@@ -13,17 +13,6 @@ export const regAuthor = async (data: IAuthorReg) => {
     return { result, ok: res.ok }
 }
 
-// export const loginAuthor = async (data: IAuthorLogin) => {
-//     const res = await fetch(`${base_url}/authors/login`, {
-//         method: "POST",
-//         body: JSON.stringify(data),
-//         headers: {
-//             "Content-Type": "application/json"
-//         }
-//     })
-//     const result = await res.json()
-//     return { result, ok: res.ok }
-// }
 
     export const loginAuthor = async (data: IAuthorLogin) => {
         const res = await fetch(`${base_url}/authors/login`, {
