@@ -2,6 +2,7 @@ import { Router } from "express";
 import { BlogController } from "../controllers/blog.controller";
 import { verifyToken } from "../middlewares/token";
 import { uploader } from "../middlewares/uploader";
+import { checkAdmin } from "../middlewares/token";
 
 export class BlogRouter {
     private router: Router
@@ -21,6 +22,7 @@ export class BlogRouter {
         )
         this.router.get('/', this.blogController.getBlogs)
         this.router.get('/:slug', this.blogController.getBlogSlug)
+        // this.router.get('/dashboard', checkAdmin, this.blogController.getDashboard)
     }
 
     getRouter(): Router {

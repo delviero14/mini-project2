@@ -27,13 +27,13 @@ export async function generateMetadata({ params }: { params: { slug: string } })
             images: [blog?.image],
         },
         price: blog?.price,
-        type: blog?.type == 'Paid' ? '' : 'Free',
+        type: blog?.type == 'Paid' ? '' : 'Free',
         seat: blog?.availableSeats,
         slug: blog?.slug,
     };
 }
 
-// Utility function to format the price as Rupiah
+
 const formatToRupiah = (value: string | number): string => {
     const numericValue = typeof value === "string" ? parseFloat(value) : value;
     return new Intl.NumberFormat("id-ID", {
@@ -86,22 +86,22 @@ export default async function BlogDetail({ params }: { params: { slug: string } 
                     />
                     <div>{blog?.content}</div>
 
-                    {/* Display the price as Rupiah */}
+                    
                     <div className="text-[18px] max-md:text-[14px]">
                         {formatToRupiah(blog?.price)}
                     </div>
-                    <div className="text-[18px] max-md:text-[14px]">{blog?.type == 'Paid' ? '' : 'Free'}</div>
+                    <div className="text-[18px] max-md:text-[14px]">{blog?.type == 'Free' ? '' : 'Free'}</div>
                     <div>
                         <Link href={`/pages/book/${blog?.slug}`}>
-                             <button>Book Event!</button>
-                         </Link>
+                            <button>Book Event!</button>
+                        </Link>
                     </div>
 
                     <div>
                         <button>Have referrals? Click Here!</button>
                     </div>
                     <div>
-                        <button>Review The Event !</button>
+                        <button>Review The Event!</button>
                     </div>
                 </div>
             </div>

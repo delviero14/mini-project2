@@ -78,7 +78,7 @@ export default function SearchBlog() {
                                     location={items.location || 'Location not specified'}
                                     content={items.content}
                                     price={items.price}
-                                    type={items?.type == 'Paid' ? '' : 'Free'} 
+                                    type={items?.type } 
                                 />
                             )
                         })
